@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Contact from "./components/Contact";
+import { useEffect, useState } from "react";
+import { fetchUser } from "./services/random-user";
 
 function App() {
+  const [randomUser, setRandomUser] = useState("");
+  
+  const handleChange = async () => {
+   let res=await fetchUser();
+    setRandomUser(res);
+  };
+  useEffect(() => {
+    handleChange();
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+      <Contact randomUser={randomUser}/>
+      <input type="button" value="change" onClick={handleChange} />
     </div>
   );
 }
